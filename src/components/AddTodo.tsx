@@ -1,10 +1,10 @@
 import React from "react";
 import Style from "./addTodo.module.css";
-import type { ChildProp } from "../types";
+import type { ChildProp, Todos } from "../types";
 import { genrateId } from "../helper/getId";
 
-export const AddTodo = ({ setTodos }: ChildProp) => {
-  const [todo, setTodo] = React.useState<string>("");
+export const AddTodo = ({ setTodos, editTodo }: ChildProp) => {
+  const [todo, setTodo] = React.useState<string>(editTodo);
   let value: string | null;
   let isImportent: boolean;
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,6 +21,12 @@ export const AddTodo = ({ setTodos }: ChildProp) => {
     ]);
     setTodo("");
   }
+
+  React.useEffect(() => {
+  if (editTodo && editTodo.trim() !== "") {
+    setTodo(editTodo);
+  }
+}, [editTodo]);
   return (
     <div className={Style.outerContainer}>
       <div className={Style.searchContainer}>
